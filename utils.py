@@ -6,9 +6,6 @@ from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.appName('spark-session').getOrCreate()
 
-print (spark)
-
-
 def shape(self):
   
   '''
@@ -186,7 +183,7 @@ def duplicated(self, subset = None, orderby = None, ascending = False, keep = 'f
     .withColumn('seq', f.row_number().over(w1))
   
   if keep == 'first':
-    self = self.withColumn('duplicate_indicator', f.when(f.col('seq') == 1, False).otherwise(True))
+    self = self.withColumn('duplicate_indicator', f.when(f.col('seq') == 1, False).otherwise(True)).drop(*['seq'])
     
   elif keep == 'last':
     self = \
